@@ -1,0 +1,95 @@
+# version: '3.8'
+
+# services:
+#   db:
+#     image: mysql:5.7
+#     restart: always
+#     environment:
+#       MYSQL_ROOT_PASSWORD: 123456
+#       MYSQL_DATABASE: postuser
+#       MYSQL_USER: jose
+#       MYSQL_PASSWORD: 123456
+#     ports:
+#       - "3307:3306"
+   
+
+#   app:
+#     env_file:
+#       - .env
+#     ports:
+#       - "3000:3000"
+#     depends_on:
+#       - db
+#     build: .  
+#     networks:
+#       - db
+ 
+# networks:
+#   db:
+#     driver: bridge  
+
+
+
+# version: '3.8'
+# services:
+#   mysql:
+#     image: mysql:8.0
+#     command: --default-authentication-plugin=mysql_native_password
+
+#     container_name: mysql_db
+#     restart: always
+#     environment:
+#       MYSQL_ROOT_PASSWORD: 123456
+#       MYSQL_DATABASE: postuser
+#       MYSQL_USER: jose
+#       MYSQL_PASSWORD: 123456
+#     # volumes:
+#     #   - ./mysql:/var/lib/mysql
+#     ports:
+#       - '3307:3306'
+#     networks:
+#       - my-server_demo  
+#   backend:
+#     build:
+#       context: ./
+#       dockerfile: Dockerfile-backend
+#     container_name: backend_service
+#     restart: always
+#     depends_on:
+#       - mysql
+#     links:
+#       - mysql
+#     ports:
+#       - '3001:3000'
+#     networks:
+#       - my-server_demo  
+# networks:
+#   my-server_demo:  
+
+version: '3.5'
+
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+     -  MYSQL_ROOT_PASSWORD=123456
+     -  MYSQL_DATABASE=postuser
+     -  MYSQL_USER=jose
+     -  MYSQL_PASSWORD=123456  
+    container_name: mysql_db2
+    volumes:
+     - ./mysql:/var/lib/mysql
+    ports:
+     - '3307:3306'
+
+  app:
+    build:
+     context: .
+     dockerfile: Dockerfile
+    container_name: nest-docker-mysql2
+    ports:
+     - '3000:3000'
+    depends_on:
+     - db
+   
